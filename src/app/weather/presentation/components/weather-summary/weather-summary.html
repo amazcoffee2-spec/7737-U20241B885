@@ -1,10 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+<mat-card class = "weather-card">
 
-</body>
-</html>
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>cloud</mat-icon>
+      Current Weather
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    @if (loading()) {
+      <div class="weather-loading">
+        <mat-spinner diameter="35"> </mat-spinner>
+        <p> Loading weather information...</p>
+      </div>
+    } @else if (error()){
+      <div class="weather-error" role="alert">
+        <mat-icon> error_outline</mat-icon>
+        <p>{{error()}}</p>
+      </div>
+    } @else if (temperature() !== null){
+      <div class="weather-temperature">
+        <mat-icon> thermostat</mat-icon>
+        <span> {{temperature()}} C</span>
+      </div>
+    } @else {
+      <p class="weather-empty">
+        Select an activity to check the current temperature.
+      </p>
+    }
+  </mat-card-content>
+</mat-card>
