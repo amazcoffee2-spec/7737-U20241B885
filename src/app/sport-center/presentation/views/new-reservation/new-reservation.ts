@@ -7,7 +7,13 @@ import {Reservation} from '../../../domain/model/reservation.entity';
 @Component({
   selector: 'app-new-reservation',
   standalone:true,
-  imports: [MatCardModule, MatProgressSpinnerModule, MatTableModule],
+  imports: [MatCardModule, matIconModule],
   templateUrl: 'new-reservation.html',
   styleUrls: ['./new-reservation.css']
 })
+
+export class NewReservationComponent {
+  readonly sportCenter = input<SportCenter | null>(null);
+  readonly reservation = input<Reservation | null>(null);
+
+}
