@@ -1,59 +1,123 @@
-# Untitled
+# UrbanFit
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.2.
+Web application for browsing sports centers and managing activity reservations. The project is built with Angular and uses `json-server` as a local development API.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- Browse sports centers.
+- View each center's name, activity, capacity, and coordinates.
+- Retrieve and create reservations through HTTP services.
+- Retrieve current temperature information for an activity or sports center.
+- Reusable components for loading and error states.
+- Layered architecture organized into domain, infrastructure, application, and presentation.
 
-```bash
-ng serve
-```
+## Technologies
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- Angular 22
+- TypeScript 6
+- Angular Material
+- RxJS
+- json-server
+- Vitest
 
-## Code scaffolding
+## Requirements
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Node.js compatible with Angular 22.
+- npm 12 or a compatible version.
 
-```bash
-ng generate component component-name
-```
+## Installation
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Clone the repository, enter the project directory, and install the dependencies:
 
 ```bash
-ng test
+npm install
 ```
 
-## Running end-to-end tests
+## Running the application
 
-For end-to-end (e2e) testing, run:
+The application consumes sports centers and reservations from `server/db.json`. In one terminal, start the local API:
 
 ```bash
-ng e2e
+npx json-server --watch server/db.json
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+The API will be available at `http://localhost:3000` by default.
 
-## Additional Resources
+In another terminal, start Angular:
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```bash
+npm start
+```
+
+Open `http://localhost:4200` in your browser. You can also run the Angular development server directly:
+
+```bash
+npx ng serve
+```
+
+## Local API endpoints
+
+| Resource | URL |
+| --- | --- |
+| Sports centers | `GET http://localhost:3000/sports-centers` |
+| Sports center by ID | `GET http://localhost:3000/sports-centers/:id` |
+| Reservations | `GET http://localhost:3000/reservations` |
+| Reservation by ID | `GET http://localhost:3000/reservations/:id` |
+| Create resource | `POST http://localhost:3000/<resource>` |
+| Update resource | `PUT http://localhost:3000/<resource>/:id` |
+| Delete resource | `DELETE http://localhost:3000/<resource>/:id` |
+
+Initial data is stored in `server/db.json`.
+
+## Project structure
+
+```text
+src/app/
+├── shared/
+│   ├── domain/             # Shared domain contracts
+│   ├── infrastructure/    # Base API, assemblers, and responses
+│   └── presentation/      # Shared components
+├── sport-center/
+│   ├── application/       # Feature state
+│   ├── domain/            # SportCenter and Reservation entities
+│   ├── infrastructure/    # Endpoints, services, and mappers
+│   └── presentation/      # Reservation views
+└── weather/
+    ├── application/       # Feature state
+    ├── domain/            # Weather entity
+    ├── infrastructure/    # Weather provider integration
+    └── presentation/      # Weather summary
+```
+
+Provider configuration is located in `environment/environment.development.ts`, including the local `json-server` API and the weather provider.
+
+## Available commands
+
+| Command | Description |
+| --- | --- |
+| `npm start` | Start the Angular development server |
+| `npm run build` | Create a production build |
+| `npm run watch` | Rebuild automatically when files change |
+| `npm test` | Run unit tests |
+
+## Build
+
+To generate the production files:
+
+```bash
+npm run build
+```
+
+Build artifacts are stored in the `dist/` directory.
+
+## Testing
+
+Run the unit tests with:
+
+```bash
+npm test
+```
+
+## License
+
+This project is for academic use.
